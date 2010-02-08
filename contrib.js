@@ -2,7 +2,7 @@
 
     /** based on prototype.js RegExp.escape */
     function escapeRegExp(str) {
-      return String(str).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, '\\$1');
+      return String(str).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, "\\$1");
     }
 
     // should this function be exported to Underscore? 

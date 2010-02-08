@@ -33,6 +33,7 @@ $(document).ready(function() {
     }
   });
 
+/*
   test("not contrib: isArguments", function() {
     var args = (function(){ return arguments; })(1, 2, 3);
     ok(!_.isArguments('string'), 'a string is not an arguments object');
@@ -44,6 +45,7 @@ $(document).ready(function() {
     ok(!_.isArguments(_([1,2,3])), 'and not vanilla arrays.');
     ok(!_.isArguments(_), 'Underscore is not an Argument');
   });
+*/
 
   test("contrib: is Array", function() {
     ok(!_.is(arguments, Array), 'the arguments object is not an array');
@@ -83,12 +85,14 @@ $(document).ready(function() {
     ok(_.is(new RegExp("identity"), RegExp), 'and new RegExp(x) are');
   });
 
-  test("contrib: is NaN", function() {
+/*
+  test("not contrib: is NaN", function() {
     ok(!_.is(undefined, NaN), 'undefined is not NaN');
     ok(!_.is(null, NaN), 'null is not NaN');
     ok(!_.is(0, NaN), '0 is not NaN');
     ok(_.is(NaN, NaN), 'but NaN is');
   });
+*/
 
   test("contrib: is Null", function() {
     ok(!_.is(undefined, null), 'undefined is not null');
@@ -133,29 +137,29 @@ $(document).ready(function() {
   iDoc.close();
 
   test("iFrame isType tests", function() {
-    ok(_.isElement(iElement), 'even from another frame');
-    ok(_.isArguments(iArguments), 'event from another frame');
-    ok(_.isArray(iArray), 'even from another frame');
-    ok(_.isString(iString), 'even from another frame');
-    ok(_.isNumber(iNumber), 'even from another frame');
-    ok(_.isFunction(iFunction), 'even from another frame');
-    ok(_.isDate(iDate), 'even from another frame');
-    ok(_.isRegExp(iRegExp), 'even from another frame');
-    ok(_.isNaN(iNaN), 'even from another frame');
-    ok(_.isNull(iNull), 'even from another frame');
-    ok(_.isUndefined(iUndefined), 'even from another frame');      
+    ok(_.isElement(iElement), 'Element even from another frame');
+    ok(_.isArguments(iArguments), 'Arguments event from another frame');
+    ok(_.isArray(iArray), 'Array even from another frame');
+    ok(_.isString(iString), 'String even from another frame');
+    ok(_.isNumber(iNumber), 'Number even from another frame');
+    ok(_.isFunction(iFunction), 'Function even from another frame');
+    ok(_.isDate(iDate), 'Date even from another frame');
+    ok(_.isRegExp(iRegExp), 'RegExp even from another frame');
+    ok(_.isNaN(iNaN), 'NaN even from another frame');
+    ok(_.isNull(iNull), 'Null even from another frame');
+    ok(_.isUndefined(iUndefined), 'Undefined even from another frame');      
   });
 
 
   test("contrib: iFrame is tests", function() {
-    //ok(_.isArguments(iArguments), 'event from another frame');
+    //ok(_.is(iArguments, Arguments), 'event from another frame');
     ok(_.is(iArray, Array), 'Array even from another frame');
     ok(_.is(iString, String), 'String even from another frame');
     ok(_.is(iNumber, Number), 'Number even from another frame');
     ok(_.is(iFunction, Function), 'Function even from another frame');
     ok(_.is(iDate, Date), 'Date even from another frame');
     ok(_.is(iRegExp, RegExp), 'RegExp even from another frame');
-    ok(_.is(iNaN, NaN), 'NaN even from another frame');
+    // ok(_.is(iNaN, NaN), 'NaN even from another frame');
     ok(_.is(iNull, null), 'Null even from another frame');
     ok(_.is(iUndefined, undefined), 'Undefined even from another frame');      
     ok(_.is(iElement, Element), 'Element even from another frame');
