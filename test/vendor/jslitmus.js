@@ -484,6 +484,9 @@
      * (Re)render the chart graphics
      */
     renderChart: function() {
+      // ignore charts if checkbox 'hide_chart' is checked.
+      var hidechart = jsl.$('hide_chart'); 
+      if (hidechart && hidechart.checked) { return ; }
       var url = JSLitmus.chartUrl();
       jsl.$('chart_link').href = url;
       jsl.$('chart_image').src = url;

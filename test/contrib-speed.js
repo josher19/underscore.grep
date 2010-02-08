@@ -22,6 +22,13 @@
 
 // Comparison Functions
 
+function isA(o, c) { return o == null ? o === c : o.constructor === c || typeof c === "function" && o instanceof c; }
+
+function isF(o, c) {
+    return o == null ? o === c : o.constructor === c ||
+        typeof c === "function" &&
+        ( (o instanceof c) || (String(o.constructor) == String(c)) );
+}
 
     // not recommended, for comparison only
     function isType(obj, constructor) {
@@ -43,6 +50,17 @@
     return _.select(obj, function(s){ var s =_.isString(s)?s:new String(s); return s.match(re)   });
   };
 
+grep_v2 = function grep(obj, re, iterator, context) {
+        var found = _.select(obj, function (s) {
+              var s = typeof s === "string" ? s : String(s);
+              return s.match(re);
+        }, context);
+    if (iterator) {
+        return _.map(found, iterator, context);
+    }
+    return found;
+}
+
 
   JSLitmus.test('isNewFunction()', function() {
     return _.select(proplist, function(prop) { return isNewFunction(_[prop]) }) 
@@ -54,6 +72,14 @@
   
   JSLitmus.test('_.is', function() {
     return _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
+  });
+  
+  JSLitmus.test('isA no iFrames', function() {
+    return _.select(proplist, function(prop) { return isA(_[prop], Function) }) 
+  });
+  
+  JSLitmus.test('isF for iFrames', function() {
+    return _.select(proplist, function(prop) { return isF(_[prop], Function) }) 
   });
 
   JSLitmus.test('isA_s using _.isFunction', function() {
@@ -92,10 +118,7 @@
   JSLitmus.test('_.is(objects, Object)', function() {
     return _.select(objects, function(object) { return _.is(object, Object) }) 
   });
-  
-  JSLitmus.test('_.grep', function() {
-    return  _.grep( proplist, /^is/ )
-  });
+
   
   JSLitmus.test('isA_min does not check for functions (could throw Error)', function() {
     return _.select(proplist, function(prop) { return isA_min(_[prop], Function) })
@@ -105,10 +128,18 @@
   JSLitmus.test('_.grep', function() {
     return  _.grep( proplist, /^is/ )
   });
-
-  JSLitmus.test('_.grep for null', function() {
-    return  _.grep( document.body.childNodes, "null" ); 
+  
+  JSLitmus.test('_.grep for a String', function() {
+    return  _.grep( proplist, "is" )
   });
+  
+  JSLitmus.test('grep_v2', function() {
+    return  grep_v2( proplist, /^is/ )
+  });
+
+//  JSLitmus.test('_.grep for null', function() {
+//    return  _.grep( document.body.childNodes, "null" ); 
+//  });
   
   JSLitmus.test('grep_s using _.isString', function() {
     return  grep_s( proplist, /^is/ )

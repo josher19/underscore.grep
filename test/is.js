@@ -9,7 +9,7 @@ $(document).ready(function() {
     "indexOf", "inject", "intersect", "invoke", "is", "isArguments", "isArray", "isDate", "isElement", "isEmpty", "isEqual",
     "isFunction", "isNaN", "isNull", "isNumber", "isRegExp", "isString", "isUndefined", "keys", "last", "lastIndexOf", "map", "max",
     "methods", "min", "noConflict", "pluck", "range", "reduce", "reduceRight", "reject", "rest", "select",
-    "size", "some", "sortBy", "sortedIndex", "tail", "tap", "template", "toArray", "uniq",
+    "size", "some", "sortBy", "sortedIndex", "tail", "tap", "template", "toArray", "toRegExp", "uniq",
     "uniqueId", "values", "without", "wrap", "zip"];
     var proplist = _.keys(_);
     var methodList = _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
@@ -84,10 +84,10 @@ $(document).ready(function() {
   });
 
   test("contrib: is NaN", function() {
-    ok(!_.isNaN(undefined, NaN), 'undefined is not NaN');
-    ok(!_.isNaN(null, NaN), 'null is not NaN');
-    ok(!_.isNaN(0, NaN), '0 is not NaN');
-    ok(_.isNaN(NaN, NaN), 'but NaN is');
+    ok(!_.is(undefined, NaN), 'undefined is not NaN');
+    ok(!_.is(null, NaN), 'null is not NaN');
+    ok(!_.is(0, NaN), '0 is not NaN');
+    ok(_.is(NaN, NaN), 'but NaN is');
   });
 
   test("contrib: is Null", function() {
@@ -111,6 +111,8 @@ $(document).ready(function() {
 
   // Setup remote variables for iFrame tests.
   var iframe = document.createElement('iframe');
+  iframe.width = 50;
+  iframe.height= 50;
   jQuery(iframe).appendTo(document.body);
   var iDoc = iframe.contentDocument || iframe.contentWindow.document;
   iDoc.write(
@@ -147,16 +149,16 @@ $(document).ready(function() {
 
   test("contrib: iFrame is tests", function() {
     //ok(_.isArguments(iArguments), 'event from another frame');
-    ok(_.is(iArray, Array), 'even from another frame');
-    ok(_.is(iString, String), 'even from another frame');
-    ok(_.is(iNumber, Number), 'even from another frame');
-    ok(_.is(iFunction, Function), 'even from another frame');
-    ok(_.is(iDate, Date), 'even from another frame');
-    ok(_.is(iRegExp, RegExp), 'even from another frame');
-    ok(_.is(iNaN, NaN), 'even from another frame');
-    ok(_.is(iNull, Null), 'even from another frame');
-    ok(_.is(iUndefined, undefined), 'even from another frame');      
-    ok(_.is(iElement, Element), 'even from another frame');
+    ok(_.is(iArray, Array), 'Array even from another frame');
+    ok(_.is(iString, String), 'String even from another frame');
+    ok(_.is(iNumber, Number), 'Number even from another frame');
+    ok(_.is(iFunction, Function), 'Function even from another frame');
+    ok(_.is(iDate, Date), 'Date even from another frame');
+    ok(_.is(iRegExp, RegExp), 'RegExp even from another frame');
+    ok(_.is(iNaN, NaN), 'NaN even from another frame');
+    ok(_.is(iNull, null), 'Null even from another frame');
+    ok(_.is(iUndefined, undefined), 'Undefined even from another frame');      
+    ok(_.is(iElement, Element), 'Element even from another frame');
   });
 
 });

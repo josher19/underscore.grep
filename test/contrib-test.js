@@ -40,17 +40,17 @@ jQuery(document).ready(function() {
 RegExp.escape = function(str) {
   return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 };
+*/
 
   test("Prototype: troublesome characters", function() {
-    var msg = "troublesome characters"
-    same(['?a', 'c?'], _.grep(['?a','b','c?'], '?'), "troublesome characters");
-    this.assertEnumEqual(['*a', 'c*'], ['*a','b','c*'].grep('*'));
-    this.assertEnumEqual(['+a', 'c+'], ['+a','b','c+'].grep('+'));
-    this.assertEnumEqual(['{1}a', 'c{1}'], ['{1}a','b','c{1}'].grep('{1}'));
-    this.assertEnumEqual(['(a', 'c('], ['(a','b','c('].grep('('));
-    this.assertEnumEqual(['|a', 'c|'], ['|a','b','c|'].grep('|'));
+    var msg = "troublesome character "
+    same(['?a', 'c?'], _.grep(['?a','b','c?'], '?'), msg + "?" );
+    same(['*a', 'c*'], _.grep(['*a','b','c*'], '*'), msg + "*");
+    same(['+a', 'c+'], _.grep(['+a','b','c+'],'+'), msg + "+");
+    same(['{1}a', 'c{1}'], _.grep(['{1}a','b','c{1}'], '{1}'), msg + "{1}");
+    same(['(a', 'c('], _.grep( ['(a','b','c('], '('), msg + "(");
+    same(['|a', 'c|'], _.grep(['|a','b','c|'], '|'), msg + "|");
   });
-*/
 
   test("contrib: isArray(_([1,2,3]))", function() {
      var second = function second(ra) { if ( _.isArray(ra) ) return ra[1]; else return "Not An Array"; }
@@ -168,7 +168,9 @@ biggy = new Boa("Feather the Boa");
  
 // anonymous functions could cause problems
 var Anon = function() {};
-var Anon2 = function() {};
+var Anon2 = function(n) {this.name=n||"Anonymous"};
+var Anon3 = function(n) {this.name=n||"Anonymous"};
+var Anon4 = function Anon4(n) {this.name=n||"Anonymous"};
 var nobody = new Anon();
 var who = new Anon2();
  
@@ -256,7 +258,9 @@ expectClass(new String("123").toString(), Object, false, msg)
 
 expectClass(nobody, Anon2, false)
 expectClass(who, Anon, false)
-expectClass(nobody, "Anon", false), // can't match anonymous functions
+expectClass(nobody, "Anon", false) // can't match anonymous functions
+expectClass(who, Anon4, false) // different constructor.name, so do not match
+expectClass(who, Anon3, true) // Same if the constructor is the same
  
 "\nAnonymous funcs can't be called by name x4:"
 expectClass(Anon, Function, true)
