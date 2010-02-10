@@ -85,27 +85,39 @@ grep_v2 = function grep(obj, re, iterator, context) {
   JSLitmus.test('isA_s using _.isFunction', function() {
     return _.select(proplist, function(prop) { return isA_s(_[prop], Function) })
   });
+
   JSLitmus.test('isType(function, Function)', function() {
     return _.select(proplist, function(prop) { return isType(_[prop], Function) }) 
   });
+  JSLitmus.test('_.is(function, Function)', function() {
+    return _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
+  });
+  JSLitmus.test('_.isFunction(function)', function() {
+    return _.select(proplist, function(prop) { return _.isFunction(_[prop]) }) 
+  });
+
   JSLitmus.test('isType(function, Number)', function() {
     return _.select(proplist, function(prop) { return isType(prop, Number) }) 
   });
-  JSLitmus.test('isType(number, Number)', function() {
+  JSLitmus.test('isType(numbers, Number)', function() {
     return _.select(numbers, function(number) { return isType(number, Number) }) 
   });
   JSLitmus.test('isType(objects, Number)', function() {
     return _.select(objects, function(object) { return isType(object, Number) }) 
   });
+  JSLitmus.test('_.is(objects, Number)', function() {
+    return _.select(objects, function(object) { return _.is(object, Number) }) 
+  });
+  JSLitmus.test('_.isNumber(objects)', function() {
+    return _.select(objects, function(object) { return _.isNumber(object) }) 
+  });
+
   JSLitmus.test('isType(objects, Object)', function() {
     return _.select(objects, function(object) { return isType(object, Object) }) 
   });
 
 
 
-  JSLitmus.test('_.is(function, Function)', function() {
-    return _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
-  });
   JSLitmus.test('_.is(function, Number)', function() {
     return _.select(proplist, function(prop) { return _.is(prop, Number) }) 
   });
