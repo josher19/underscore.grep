@@ -532,6 +532,44 @@
     return typeof obj == 'undefined';
   };
 
+ // -------------------------- Grep and Is ----------------------------
+
+  // based on prototype.js RegExp.escape
+  function escapeRegExp(str) {
+    return String(str).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, "\\$1");
+  }
+
+  //  If re is not a RegExp, convert to RegExp, 
+  //  escaping special characters such as ?,*,. and so on.
+  _.toRegExp = function toRegExp(re, options) {
+      return _.isRegExp(re) ? re : RegExp(escapeRegExp(re), options);
+  }
+
+  // Behaves like grep from prototype.js
+  _.grep = function grep(obj, re, iterator, context) {
+      var re = _.toRegExp(re);
+      var found = _.select(obj, function (s) {
+          return re.test(s);
+      }, context);
+    if (iterator) {
+        return _.map(found, iterator, context);
+    }
+      return found;
+  }
+
+  // Name of a function. Does name work on IE.
+  function getName(f) {
+     return f.name || String(f);
+  }
+
+  // _(object).is(c) - check if object is a subtype or of type c. Should work across iframes 
+   _.is = function is(o, c) {
+      return o == null ? o === c : o.constructor === c ||
+        typeof c === "function" &&
+        ( (o instanceof c) || (getName(o.constructor) === getName(c)));
+   }
+
+
   // -------------------------- Utility Functions: ----------------------------
 
   // Run Underscore.js in noConflict mode, returning the '_' variable to its
@@ -641,6 +679,11 @@
   // Extracts the result from a wrapped and chained object.
   wrapper.prototype.value = function() {
     return this._wrapped;
+  };
+
+  // Utility: get item from wrapped objects
+   wrapper.prototype.item = wrapper.prototype.get = function(n) {
+    return this._wrapped[n];
   };
 
 })();

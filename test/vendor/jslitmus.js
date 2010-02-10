@@ -1,6 +1,7 @@
 // JSLitmus.js
 //
 // History:
+//   2009-02-10: If checkbox 'hide_chart' is checked, do not show Charts or tinyurl (jsw)
 //   2008-10-27: Initial release
 //   2008-11-09: Account for iteration loop overhead
 //   2008-11-13: Added OS detection

@@ -6,8 +6,7 @@
  // var randomized = _.sortBy(numbers, function(){ return Math.random(); });
 
 
-  var proplist = _.keys(_);
-  var undef
+  var undef, proplist = _.keys(_);
   proplist.push(undef);
   proplist.push(null);
   proplist = proplist.concat(proplist);
@@ -39,8 +38,9 @@ function isF(o, c) {
     }
 
 
-  isNewFunction = function (obj) { return typeof obj === 'function' }
-  isA_s = function isA(o,c) {return o==null ? o===c : (o.constructor===c || ( _.isFunction(c) && o instanceof c));}	  
+  var isNewFunction = function (obj) { return typeof obj === 'function' }
+  // isA_s = function isA(o,c) {return o==null ? o===c : (o.constructor===c || ( _.isFunction(c) && o instanceof c));}	  
+  var isA_s = function isA(o, c) { return o == null ? o === c : o.constructor === c || _.isFunction(c) && o instanceof c; }
 
 
   isA_min = function isA(o,c) {return o==null ? o===c : (o.constructor===c || o instanceof c);}	  

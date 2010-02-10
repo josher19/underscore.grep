@@ -68,6 +68,7 @@ $(document).ready(function() {
 
   // Setup remote variables for iFrame tests.
   var iframe = document.createElement('iframe');
+  iframe.height = 8;
   jQuery(iframe).appendTo(document.body);
   var iDoc = iframe.contentDocument || iframe.contentWindow.document;
   iDoc.write(

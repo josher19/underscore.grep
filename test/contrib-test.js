@@ -1,77 +1,18 @@
 jQuery(document).ready(function() {
 
-  module("grep and isA");
-
-  test("Prototype style grep", function() {
-    ok(true, "From http://prototypejs.org/api/enumerable/grep");
-    // Get all strings with a repeated letter somewhere
-    // ['hello', 'world', 'this', 'is', 'cool'].grep(/(.)\1/)
-    // // -> ['hello', 'cool']
-    //
-    // // Get all numbers ending with 0 or 5
-    // $R(1,30).grep(/[05]$/)
-    // // -> [5, 10, 15, 20, 25, 30]
-    //
-    // // Those, minus 1
-    // $R(1,30).grep(/[05]$/, function(n) { return n - 1; })
-    // // -> [4, 9, 14, 19, 24, 29]
-    //
-    // // Get all an element's children filtered by CSS selector
-    // // (the Selector instance has a "match" method)
-    // $('foo').childElements().grep(new Selector("li.active"));
-    //
-    ok(_.isEqual(
-    	_.grep(['hello', 'world', 'this', 'is', 'cool'], /(.)\1/),
-    	['hello', 'cool']),
-       'Get all strings with a repeated letter somewhere');
-    ok(_.isEqual( 
-    	_.grep(_.range(1,31), /[05]$/),
-    	[5, 10, 15, 20, 25, 30]),
-    	"Get all numbers ending with 0 or 5");
-    ok(_.isEqual( 
-    	_.grep(_.range(1,31), /[05]$/, function(n) { return n - 1; }),
-    	[4, 9, 14, 19, 24, 29]),
-    	"Those, minus 1");
-  });
-
-/*
-
-// Should we allow RegExp special characters in Strings? From prototype.js:
-RegExp.escape = function(str) {
-  return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
-};
-*/
-
-  test("Prototype: troublesome characters", function() {
-    var msg = "troublesome character "
-    same(['?a', 'c?'], _.grep(['?a','b','c?'], '?'), msg + "?" );
-    same(['*a', 'c*'], _.grep(['*a','b','c*'], '*'), msg + "*");
-    same(['+a', 'c+'], _.grep(['+a','b','c+'],'+'), msg + "+");
-    same(['{1}a', 'c{1}'], _.grep(['{1}a','b','c{1}'], '{1}'), msg + "{1}");
-    same(['(a', 'c('], _.grep( ['(a','b','c('], '('), msg + "(");
-    same(['|a', 'c|'], _.grep(['|a','b','c|'], '|'), msg + "|");
-  });
+  module("is");
 
   test("contrib: isArray(_([1,2,3]))", function() {
      var second = function second(ra) { if ( _.isArray(ra) ) return ra[1]; else return "Not An Array"; }
      var ra = [1,2,3];
      same(second(ra), 2, "second element is 2");
      var wrapped_ra = _(ra);
-     same(second(wrapped_ra), 2, "second wrapped element is 2 ?");
-     same(second(wrapped_ra), "Not An Array", "second wrapped element is Not An Array ?");
-
-  });
-
-  test("contrib: grep", function() {
-    var num = [1,2,3,4,9,19,21,100];
-    var str = ['1','2','3','4','9','19','21','100','hello','world'];
-	equals( _.grep(num, "1").join(","), "1,19,21,100", 'numbers with 1');
-	equals( _.grep(num, /^1/).join(","), "1,19,100", 'numbers starting with 1');
-	equals( _.grep(str, "1").join(","), "1,19,21,100", 'Strings with "1"');
-	equals( _.grep(str, /^1/).join(","), "1,19,100", 'Strings starting with "1"');
-	equals( _.grep(str, "ELL").join(","), "", 'Strings with "ELL"');
-	equals( _.grep(str, /ELLO$/i).join(","), "hello", 'Strings ending with "ELLO"');
-	equals( _.grep(str, /(0|o)/).join(","), "100,hello,world", 'Strings with "o" or Zero ("0")');
+     //same(second(wrapped_ra), 2, "second wrapped element is 2 ?");
+     //same(second(wrapped_ra), "Not An Array", "second wrapped element is Not An Array ?");
+     ok( wrapped_ra.isArray(), " _([1,2,3]).isArray() is true");
+     ok( ! _.is(wrapped_ra, Array), " _.is(_([1,2,3]), Array) is false");
+     ok( wrapped_ra.is(Array), " _([1,2,3]).is(Array) is true");
+     ok( _.is(ra, Array), " is([1,2,3], Array) is true");
   });
 
   // Hack for IE 7 to find .constructor.name
