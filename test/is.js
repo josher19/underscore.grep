@@ -24,6 +24,9 @@ $(document).ready(function() {
 
   });
 
+/*
+ 
+  // will not work on IE
   test("contrib: is Element", function() {
     if (typeof Element != "undefined") {
         ok(!_.is('div', Element), 'strings are not dom elements');
@@ -33,7 +36,7 @@ $(document).ready(function() {
     }
   });
 
-/*
+  // arguments is an object, not a class
   test("not contrib: isArguments", function() {
     var args = (function(){ return arguments; })(1, 2, 3);
     ok(!_.isArguments('string'), 'a string is not an arguments object');

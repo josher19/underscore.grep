@@ -565,7 +565,7 @@
   // _(object).is(c) - check if object is a subtype or of type c. Should work across iframes 
    _.is = function is(o, c) {
       return o == null ? o === c : o.constructor === c ||
-        typeof c === "function" &&
+        typeof c === "function" && o.constructor &&
         ( (o instanceof c) || (getName(o.constructor) === getName(c)));
    }
 
