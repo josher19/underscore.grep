@@ -14,7 +14,7 @@
   // proplist.push(proplist);
 
 // Add New Functions to _  
-//    _.isA = function isA(o,c) {return o==null ? o===c : (o.constructor===c || ( typeof c === "function" && o instanceof c));}	  
+//    _.is = function isA(o,c) {return o==null ? o===c : (o.constructor===c || ( typeof c === "function" && o instanceof c));}	  
 
 //  _.grep = function(obj,re) {
 //    return _.select(obj, function(s){ var s = (typeof s === "string")?s : String(s); return s.match(re)   });
@@ -52,8 +52,8 @@
     return _.select(proplist, function(prop){ return _.isFunction(_[prop]) })  
   });
   
-  JSLitmus.test('_.isA', function() {
-    return _.select(proplist, function(prop) { return _.isA(_[prop], Function) }) 
+  JSLitmus.test('_.is', function() {
+    return _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
   });
 
   JSLitmus.test('isA_s using _.isFunction', function() {
@@ -77,20 +77,20 @@
 
 
 
-  JSLitmus.test('_.isA(function, Function)', function() {
-    return _.select(proplist, function(prop) { return _.isA(_[prop], Function) }) 
+  JSLitmus.test('_.is(function, Function)', function() {
+    return _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
   });
-  JSLitmus.test('_.isA(function, Number)', function() {
-    return _.select(proplist, function(prop) { return _.isA(prop, Number) }) 
+  JSLitmus.test('_.is(function, Number)', function() {
+    return _.select(proplist, function(prop) { return _.is(prop, Number) }) 
   });
-  JSLitmus.test('_.isA(number, Number)', function() {
-    return _.select(numbers, function(number) { return _.isA(number, Number) }) 
+  JSLitmus.test('_.is(number, Number)', function() {
+    return _.select(numbers, function(number) { return _.is(number, Number) }) 
   });
-  JSLitmus.test('_.isA(objects, Number)', function() {
-    return _.select(objects, function(object) { return _.isA(object, Number) }) 
+  JSLitmus.test('_.is(objects, Number)', function() {
+    return _.select(objects, function(object) { return _.is(object, Number) }) 
   });
-  JSLitmus.test('_.isA(objects, Object)', function() {
-    return _.select(objects, function(object) { return _.isA(object, Object) }) 
+  JSLitmus.test('_.is(objects, Object)', function() {
+    return _.select(objects, function(object) { return _.is(object, Object) }) 
   });
   
   JSLitmus.test('_.grep', function() {

@@ -2,6 +2,66 @@ jQuery(document).ready(function() {
 
   module("grep and isA");
 
+  test("Prototype style grep", function() {
+    ok(true, "From http://prototypejs.org/api/enumerable/grep");
+    // Get all strings with a repeated letter somewhere
+    // ['hello', 'world', 'this', 'is', 'cool'].grep(/(.)\1/)
+    // // -> ['hello', 'cool']
+    //
+    // // Get all numbers ending with 0 or 5
+    // $R(1,30).grep(/[05]$/)
+    // // -> [5, 10, 15, 20, 25, 30]
+    //
+    // // Those, minus 1
+    // $R(1,30).grep(/[05]$/, function(n) { return n - 1; })
+    // // -> [4, 9, 14, 19, 24, 29]
+    //
+    // // Get all an element's children filtered by CSS selector
+    // // (the Selector instance has a "match" method)
+    // $('foo').childElements().grep(new Selector("li.active"));
+    //
+    ok(_.isEqual(
+    	_.grep(['hello', 'world', 'this', 'is', 'cool'], /(.)\1/),
+    	['hello', 'cool']),
+       'Get all strings with a repeated letter somewhere');
+    ok(_.isEqual( 
+    	_.grep(_.range(1,31), /[05]$/),
+    	[5, 10, 15, 20, 25, 30]),
+    	"Get all numbers ending with 0 or 5");
+    ok(_.isEqual( 
+    	_.grep(_.range(1,31), /[05]$/, function(n) { return n - 1; }),
+    	[4, 9, 14, 19, 24, 29]),
+    	"Those, minus 1");
+  });
+
+/*
+
+// Should we allow RegExp special characters in Strings? From prototype.js:
+RegExp.escape = function(str) {
+  return String(str).replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
+};
+
+  test("Prototype: troublesome characters", function() {
+    var msg = "troublesome characters"
+    same(['?a', 'c?'], _.grep(['?a','b','c?'], '?'), "troublesome characters");
+    this.assertEnumEqual(['*a', 'c*'], ['*a','b','c*'].grep('*'));
+    this.assertEnumEqual(['+a', 'c+'], ['+a','b','c+'].grep('+'));
+    this.assertEnumEqual(['{1}a', 'c{1}'], ['{1}a','b','c{1}'].grep('{1}'));
+    this.assertEnumEqual(['(a', 'c('], ['(a','b','c('].grep('('));
+    this.assertEnumEqual(['|a', 'c|'], ['|a','b','c|'].grep('|'));
+  });
+*/
+
+  test("contrib: isArray(_([1,2,3]))", function() {
+     var second = function second(ra) { if ( _.isArray(ra) ) return ra[1]; else return "Not An Array"; }
+     var ra = [1,2,3];
+     same(second(ra), 2, "second element is 2");
+     var wrapped_ra = _(ra);
+     same(second(wrapped_ra), 2, "second wrapped element is 2 ?");
+     same(second(wrapped_ra), "Not An Array", "second wrapped element is Not An Array ?");
+
+  });
+
   test("contrib: grep", function() {
     var num = [1,2,3,4,9,19,21,100];
     var str = ['1','2','3','4','9','19','21','100','hello','world'];
@@ -37,10 +97,10 @@ function getName(cons) { return cons.name || getFunc(cons) ; }
   
   // _.isA(a,b) === expect 
   function expectClass(a,b,expect, msg) {
-	return equals(expect,  _.isA(a,b), (msg||"") + pp(a) + " isA " + pp(b));
+	return equals(expect,  _.is(a,b), (msg||"") + pp(a) + " isA " + pp(b));
   }
  
-   test("contrib: isA", function() {
+   test("contrib: is", function() {
 
    var unset, undef, ra = [];
    

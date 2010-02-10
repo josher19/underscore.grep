@@ -14,7 +14,7 @@ $(document).ready(function() {
     var expected = ["all", "any", "bind", "bindAll", "breakLoop", "clone", "compact",
     "compose","defer", "delay", "detect", "each", "every", "extend", "filter", "first",
     "flatten", "foldl", "foldr", "forEach", "functions", "grep", "head", "identity", "include",
-    "indexOf", "inject", "intersect", "invoke", "isA", "isArguments", "isArray", "isDate", "isElement", "isEmpty", "isEqual",
+    "indexOf", "inject", "intersect", "invoke", "is", "isArguments", "isArray", "isDate", "isElement", "isEmpty", "isEqual",
     "isFunction", "isNaN", "isNull", "isNumber", "isRegExp", "isString", "isUndefined", "keys", "last", "lastIndexOf", "map", "max",
     "methods", "min", "noConflict", "pluck", "range", "reduce", "reduceRight", "reject", "rest", "select",
     "size", "some", "sortBy", "sortedIndex", "tail", "tap", "template", "toArray", "uniq",
