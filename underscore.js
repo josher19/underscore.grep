@@ -534,28 +534,25 @@
 
  // -------------------------- Grep and Is ----------------------------
 
-  // based on prototype.js RegExp.escape
-  function escapeRegExp(str) {
-    return String(str).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, "\\$1");
-  }
+// Here it is without the helper functions, but I still think _.toRegExp is useful.
 
-  //  If re is not a RegExp, convert to RegExp, 
-  //  escaping special characters such as ?,*,. and so on.
-  _.toRegExp = function toRegExp(re, options) {
-      return _.isRegExp(re) ? re : RegExp(escapeRegExp(re), options);
-  }
-
-  // Behaves like grep from prototype.js
-  _.grep = function grep(obj, re, iterator, context) {
-      var re = _.toRegExp(re);
-      var found = _.select(obj, function (s) {
-          return re.test(s);
-      }, context);
-    if (iterator) {
-        return _.map(found, iterator, context);
-    }
+/** 
+ *  Behaves like grep from prototype.js 
+ *  Search for an object matching a regular expression with an optional iterator and context.
+ *  Strings will be converted to a Regular Expression, escaping any "special characters"
+ *  such as: {.(|}:)$+?=^*!/[]\
+ */
+    _.grep = function grep(obj, re, iterator, context) {
+        var re = _.isRegExp(re) ? re : RegExp(String(re).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, "\\$1"));
+        var found = _.select(obj, function (s) {
+            return re.test(s);
+        }, context);
+      if (iterator) {
+          return _.map(found, iterator, context);
+      }
       return found;
-  }
+    }
+
 
   // Name of a function. Does name work on IE.
   function getName(f) {
@@ -566,7 +563,7 @@
    _.is = function is(o, c) {
       return o == null ? o === c : o.constructor === c ||
         typeof c === "function" && 
-        ( (o instanceof c) || (getName(o.constructor||o) === getName(c)));
+        ( (o instanceof c) || Boolean(getName(o.constructor||o) === getName(c)));
    }
 
 

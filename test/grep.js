@@ -5,14 +5,14 @@ jQuery(document).ready(function() {
   test("contrib: grep", function() {
     var num = [1,2,3,4,9,19,21,100];
     var str = ['1','2','3','4','9','19','21','100','hello','world'];
-	equals( _.grep(num, "1").join(","), "1,19,21,100", 'numbers with 1');
-	equals( _.grep(num, /^1/).join(","), "1,19,100", 'numbers starting with 1');
+	equals( _.grep(num, "1").join(","), "1,19,21,100", 'numbers with 1= "1"');
+	equals( _.grep(num, /^1/).join(","), "1,19,100", 'numbers starting with 1= /^1/');
 	equals( _.grep(str, "1").join(","), "1,19,21,100", 'Strings with "1"');
-	equals( _.grep(str, /^1/).join(","), "1,19,100", 'Strings starting with "1"');
+	equals( _.grep(str, /^1/).join(","), "1,19,100", 'Strings starting with "1"= /^1/');
 	equals( _.grep(str, "^1").join(","), "", 'Strings with "^1"');
 	equals( _.grep(str, "ELL").join(","), "", 'Strings with "ELL"');
-	equals( _.grep(str, /ELLO$/i).join(","), "hello", 'Strings ending with "ELLO"');
-	equals( _.grep(str, /(0|o)/).join(","), "100,hello,world", 'Strings with "o" or Zero ("0")');
+	equals( _.grep(str, /ELLO$/i).join(","), "hello", 'Strings ending with "ELLO"= /ELLO$/i');
+	equals( _.grep(str, /(0|o)/).join(","), "100,hello,world", 'Strings with "lo" or Zero ("0")= /(0|lo)/');
   });
 
   test("Prototype style grep", function() {
@@ -58,14 +58,38 @@ jQuery(document).ready(function() {
   });
 
 
-  test("contrib: toRegExp", function() {
+  // based on prototype.js RegExp.escape
+  function escapeRegExp(str) {
+    return String(str).replace(/([{.(|}:)$+?=^*!\/[\]\\])/g, "\\$1");
+  }
+
+  //  If re is not a RegExp, convert to RegExp, 
+  //  escaping special characters such as ?,*,. and so on.
+  function toRegExp(re, options) {
+      return _.isRegExp(re) ? re : RegExp(escapeRegExp(re), options);
+  }
+
+  // Behaves like grep from prototype.js
+  var greplong = function grep(obj, re, iterator, context) {
+      var re = _.toRegExp(re);
+      var found = _.select(obj, function (s) {
+          return re.test(s);
+      }, context);
+    if (iterator) {
+        return _.map(found, iterator, context);
+    }
+      return found;
+  }
+
+
+  test("contrib: toRegExp (obsolete)", function() {
     var r="{.(|}:)$=^!\\\/[*+?]";
-    ok(! _.isEqual(_.toRegExp(r, "g"),new RegExp(r, "g" )), "Convert all special chars");
-    ok(_.isEqual(_.toRegExp("{.(", "i"),new RegExp("\\{\\.\\(", "i" )), "{.(");
-    ok(_.isEqual(_.toRegExp("|}:)", "i"),/\|\}\:\)/i ), "|}:)");
-    ok(_.isEqual(_.toRegExp("$?=^!", "g"),new RegExp("\\$\\?\\=\\^\\!", "g" )), "$?=^!");
+    ok(! _.isEqual(toRegExp(r, "g"),new RegExp(r, "g" )), "Convert all special chars");
+    ok(_.isEqual(toRegExp("{.(", "i"),new RegExp("\\{\\.\\(", "i" )), "{.(");
+    ok(_.isEqual(toRegExp("|}:)", "i"),/\|\}\:\)/i ), "|}:)");
+    ok(_.isEqual(toRegExp("$?=^!", "g"),new RegExp("\\$\\?\\=\\^\\!", "g" )), "$?=^!");
     r="[*]/\\+";
-    ok(_.isEqual(_.toRegExp(r, "ig"),/\[\*\]\/\\\+/ig), r);
+    ok(_.isEqual(toRegExp(r, "ig"),/\[\*\]\/\\\+/ig), r);
   });
   
   

@@ -181,8 +181,9 @@ _(lyrics).chain()
       <a href="#invoke">invoke</a>, <a href="#pluck">pluck</a>,
       <a href="#max">max</a>, <a href="#min">min</a>,
       <a href="#sortBy">sortBy</a>, <a href="#sortedIndex">sortedIndex</a>,
-      <a href="#toArray">toArray</a>, <a href="#size">size</a></span>
-    </p>
+      <a href="#toArray">toArray</a>, <a href="#size">size</a>,
+      <a href="#grep">grep</a>
+    </span></p>
 
     <p>
       <b>Arrays</b>
@@ -224,7 +225,8 @@ _(lyrics).chain()
     <p>
       <b>Chaining</b>
       <br />
-      <span class="methods"><a href="#chain">chain</a>, <a href="#value">value</a>
+      <span class="methods"><a href="#chain">chain</a>, <a href="#value">value</a>, <a href="#item">item</a>
+      </span>
     </p>
 
     <div id="documentation">
@@ -457,6 +459,19 @@ _.sortedIndex([10, 20, 30, 40, 50], 35);
       <pre>
 _.size({one : 1, two : 2, three : 3});
 =&gt; 3
+</pre>
+
+      <p id="grep">
+        <b class="header">grep</b><code>_.grep(obj, re, [iterator], [context])</code>
+        <br />
+        Returns all values that match regular expression <b>re</b> and then applies (optional) <b>iterator</b> in (optional) <b>context</b>.
+        If <b>re</b> is not a RegExp, then it is converted to one, escaping any RegExp "special characters" such as {.( |}:)$ +?=^* !/[]\.
+      </p>
+      <pre>
+_.grep(_.range(0,31), /[03]$/)
+=&gt; [0,3,10,13,20,23,30]
+_.grep(_.range(0,31), /[03]$/, function(n) { return 2*n })
+=&gt; [0,6,20,26,40,46,60]
 </pre>
 
       <h2>Array Functions</h2>
@@ -1051,6 +1066,19 @@ var youngest = _(stooges).chain()
       <pre>
 _([1, 2, 3]).value();
 =&gt; [1, 2, 3]
+</pre>
+
+      <p id="item">
+        <b class="header">item</b><code>_(obj).item(n)</code>
+        <span class="alias">Alias: <b>get</b></span>
+        <br />
+        Get an item of a wrapped object. Equivalent to <b>_(obj).value()[n]</b> or <b>obj[n]</b>.
+      </p>
+      <pre>
+_([1, 2, 3]).item(1);
+=&gt; 2
+_({'one' : 1, 'two' : 2, 'three' : 3}).get('one')
+=&gt; 1
 </pre>
 
       <h2 id="duck_typing">Duck Typing</h2>

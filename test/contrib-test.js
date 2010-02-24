@@ -3,12 +3,12 @@ jQuery(document).ready(function() {
   module("is");
 
   test("contrib: isArray(_([1,2,3]))", function() {
-     var second = function second(ra) { if ( _.isArray(ra) ) return ra[1]; else return "Not An Array"; }
+     var second = function second(ra) { if ( _.isArray(ra) ) return ra.get ? ra.get(1) : ra[1]; else return "Not An Array"; }
      var ra = [1,2,3];
      same(second(ra), 2, "second element is 2");
      var wrapped_ra = _(ra);
-     //same(second(wrapped_ra), 2, "second wrapped element is 2 ?");
-     //same(second(wrapped_ra), "Not An Array", "second wrapped element is Not An Array ?");
+     same(second(wrapped_ra), 2, "second wrapped element is 2 ?");
+     // same(second(wrapped_ra), "Not An Array", "second wrapped element is Not An Array ?");
      ok( wrapped_ra.isArray(), " _([1,2,3]).isArray() is true");
      ok( ! _.is(wrapped_ra, Array), " _.is(_([1,2,3]), Array) is false");
      ok( wrapped_ra.is(Array), " _([1,2,3]).is(Array) is true");

@@ -9,7 +9,7 @@ $(document).ready(function() {
     "indexOf", "inject", "intersect", "invoke", "is", "isArguments", "isArray", "isDate", "isElement", "isEmpty", "isEqual",
     "isFunction", "isNaN", "isNull", "isNumber", "isRegExp", "isString", "isUndefined", "keys", "last", "lastIndexOf", "map", "max",
     "methods", "min", "noConflict", "pluck", "range", "reduce", "reduceRight", "reject", "rest", "select",
-    "size", "some", "sortBy", "sortedIndex", "tail", "tap", "template", "toArray", "toRegExp", "uniq",
+    "size", "some", "sortBy", "sortedIndex", "tail", "tap", "template", "toArray", "uniq",
     "uniqueId", "values", "without", "wrap", "zip"];
     var proplist = _.keys(_);
     var methodList = _.select(proplist, function(prop) { return _.is(_[prop], Function) }) 
